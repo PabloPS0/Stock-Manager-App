@@ -24,7 +24,7 @@ cd StockManager
 ```
 3. Execute o aplicativo:
 ```
-python app.py
+python src/app.py
 ```
 
 ## Contribuições
