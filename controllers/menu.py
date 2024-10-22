@@ -32,10 +32,6 @@ class StockManagerApp(tk.Tk):
         remove_button = tk.Button(self.bottom_frame, text="Remove Item", command=self.remove_item)
         remove_button.pack(pady=10)
 
-        # Caixa de entrada para pesquisar item
-
-        # Outras opções...
-
     def add_item(self):
         # Lógica para adicionar item
         # Criar uma sub-janela
@@ -48,7 +44,3 @@ class StockManagerApp(tk.Tk):
     def remove_item(self):
         # Lógica para remover item
         messagebox.showinfo("Remover Item", "Abrir sub-janela de Remover Item")
-
-if __name__ == "__main__":
-    app = StockManagerApp()
-    app.mainloop()
