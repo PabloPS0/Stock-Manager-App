@@ -38,7 +38,7 @@ class StockManagerApp(tk.Tk):
         remove_button = tk.Button(self.bottom_frame, text="Remove Item", command=self.remove_item)
         remove_button.pack(pady=10)
 
-        exit_button = tk.Buttom(master=self.bottom_frame, text="Exit", command=self.close_window)
+        exit_button = tk.Button(master=self.bottom_frame, text="Exit", command=self.close_window)
         exit_button.pack(pady=10)
 
     def add_item(self):
