@@ -29,8 +29,17 @@ class StockManagerApp(tk.Tk):
         search_button = tk.Button(self.bottom_frame, text="Search Item", command=self.search_item)
         search_button.pack(pady=10)
 
+        update_button = tk.Button(master=self.bottom_frame, text="Update Item", command=self.update_item)
+        update_button.pack(pady=10)
+
+        list_button = tk.Button(master=self.bottom_frame, text="List Item", command=self.update_item)
+        list_button.pack(pady=10)
+
         remove_button = tk.Button(self.bottom_frame, text="Remove Item", command=self.remove_item)
         remove_button.pack(pady=10)
+
+        exit_button = tk.Button(master=self.bottom_frame, text="Exit", command=self.close_window)
+        exit_button.pack(pady=20)
 
     def add_item(self):
         # Lógica para adicionar item
@@ -39,8 +48,19 @@ class StockManagerApp(tk.Tk):
     
     def search_item(self):
         # Lógica para pesquisar item
-        messagebox.showinfo("Pesquisar Item", "Abrir sub-janela de Pesquisar Item")
+        window_search = tk.Toplevel(master=self)
+
+    def update_item(self):
+        # Lógica para atualizar item
+        window_update = tk.Toplevel(master=self)
+    
+    def list_items(self):
+        # Lógica para listar itens
+        window_list = tk.Toplevel(master=self)
 
     def remove_item(self):
         # Lógica para remover item
-        messagebox.showinfo("Remover Item", "Abrir sub-janela de Remover Item")
+        window_remove = tk.Toplevel(master=self)
+
+    def close_window(self):
+        self.destroy()  # Fechar a janela principal e encerrar o programa
