@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from repositories.product_database import ProductFoundError, ProductRepository
-
+from service.product_service import ProductValidator
 class StockManagerApp(tk.Tk):
     def __init__(self):
         self.product_repository = ProductRepository()
