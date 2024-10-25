@@ -30,6 +30,13 @@ python src/app.py
 ## Contribuições
 Contribuições são bem-vindas! Se você tem sugestões ou deseja adicionar novas funcionalidades, sinta-se à vontade para abrir um pull request ou criar uma issue.
 
+## Bugs
+### Não reconhecer módulos
+#### Resolução:
+- Ajustar o caminho dos módulos para garantir que sejam reconhecidos corretamente em outras pastas do projeto.
+- Adicionar a pasta raiz ao PYTHONPATH para resolver problemas de importação.
+- Corrigir erros de digitação que poderiam causar falhas na execução.
+
 
 ## Licença
 Este projeto é licenciado sob a **MIT License**.
