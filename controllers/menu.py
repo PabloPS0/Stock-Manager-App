@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox
+from repositories.product_database import ProductFoundError, ProductRepository
 
 class StockManagerApp(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Controle de Estoque")
+        self.title("StockManager")
         self.create_containers()
         self.create_widgets()
 
