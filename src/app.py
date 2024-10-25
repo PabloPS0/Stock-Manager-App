@@ -7,5 +7,5 @@ from controllers.menu import StockManagerApp
 
 # Starting the program's graphical interface
 if __name__ == "__main__":
-    app = StockManagerApp().mainloop()  # Instanciando a classe StockManagerApp
+    app = StockManagerApp()  # Instanciando a classe StockManagerApp
     app.mainloop()            
