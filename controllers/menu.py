@@ -4,8 +4,10 @@ from repositories.product_database import ProductFoundError, ProductRepository
 
 class StockManagerApp(tk.Tk):
     def __init__(self):
+        self.product_repository = ProductRepository()
         super().__init__()
         self.title("StockManager")
+        self.protocol("WM_DELETE_WINDOW", self.close_window) # Configure the closing protocol
         self.create_containers()
         self.create_widgets()
 
