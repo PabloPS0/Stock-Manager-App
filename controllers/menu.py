@@ -68,13 +68,13 @@ class StockManagerApp(tk.Tk):
             name = name_entry.get()
             price = price_entry.get()
             quantity = quantity_entry.get()
-
-            # Adiciona o produto ao repositório e banco de dados
-            self.product_database.add(name, price, quantity)
-            messagebox.showinfo("Success", "Item added successfully!")
+            try:
+                self.product_database.add(name, price, quantity)
+                messagebox.showinfo("Success", "Item added successfully!")
+            except ProductFoundError as e:
+                messagebox.showerror("Error", str(e))
             window_add.destroy()
 
-        
         # Botão de Confirmação
         confirm_button = tk.Button(window_add, text="Confirm", command=confirm_add)
         confirm_button.grid(row=3, columnspan=2, pady=5, sticky="e")
@@ -82,18 +82,40 @@ class StockManagerApp(tk.Tk):
     def search_item(self):
         # Lógica para pesquisar item
         window_search = tk.Toplevel(self)
+        window_search.title("Search Item")
+        # Labels e Entradas
+        tk.Label(window_search, text="Id:").grid(row=1, column=0, padx=5, pady=5)
+        id_entry = tk.Entry(window_search, width=30)
+        id_entry.grid(row=0, column=1, padx=5, pady=5)
+        
+        # Captura dados de entrada
+        def confirm_search():
+            id = id_entry.get()
+            try:
+                product = self.product_database.search(id)
+                messagebox.showinfo("Success", f"Product found: {product}")
+            except ProductFoundError as e:
+                messagebox.showerror("Error", str(e))
+            window_search.destroy()
+        
+        # Botão de Confirmação
+        confirm_button = tk.Button(window_search, text="Confirm", command=confirm_search)
+        confirm_button.grid(row=3, columnspan=2, pady=5, sticky="e")
 
     def update_item(self):
         # Lógica para atualizar item
         window_update = tk.Toplevel(self)
+        window_update.title("Update Item")
     
     def list_items(self):
         # Lógica para listar itens
         window_list = tk.Toplevel(self)
+        window_list.title("List All Items")
 
     def remove_item(self):
         # Lógica para remover item
         window_remove = tk.Toplevel(self)
+        window_remove.title("Remove Item")
 
     def close_window(self):
         self.destroy()  # Fechar a janela principal e encerrar o programa
