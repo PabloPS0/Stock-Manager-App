@@ -36,7 +36,7 @@ class StockManagerApp(tk.Tk):
         update_button = tk.Button(self.bottom_frame, text="Update Item", command=self.update_item)
         update_button.pack(pady=10)
 
-        list_button = tk.Button(self.bottom_frame, text="List Item", command=self.update_item)
+        list_button = tk.Button(self.bottom_frame, text="List Item", command=self.list_items)
         list_button.pack(pady=10)
 
         remove_button = tk.Button(self.bottom_frame, text="Remove Item", command=self.remove_item)
@@ -83,6 +83,7 @@ class StockManagerApp(tk.Tk):
         # Lógica para pesquisar item
         window_search = tk.Toplevel(self)
         window_search.title("Search Item")
+
         # Labels e Entradas
         tk.Label(window_search, text="Id:").grid(row=1, column=0, padx=5, pady=5)
         id_entry = tk.Entry(window_search, width=30)
@@ -106,16 +107,104 @@ class StockManagerApp(tk.Tk):
         # Lógica para atualizar item
         window_update = tk.Toplevel(self)
         window_update.title("Update Item")
+
+        # Labels e Entradas
+        tk.Label(window_update, text="Id:").grid(row=0, column=0, padx=5, pady=5)
+        id_entry = tk.Entry(window_update, width=30)
+        id_entry.grid(row=0, column=1, padx=5, pady=5)
+
+        # Implementar a lógica de atualização do item
+        def confirm_update():
+            id = id_entry.get()
+            try:
+                # Verifique se o produto existe antes de capturar os novos valores
+                product = self.product_database.search(id)
+
+                # Desabilitar o campo ID
+                id_entry.config(state='disabled')  # Desabilitar o campo do ID
+                    
+                tk.Label(window_update, text="Name:").grid(row=1, column=0, padx=5, pady=5)
+                name_entry = tk.Entry(window_update, width=30)
+                name_entry.grid(row=1, column=1, padx=5, pady=5)
+                name_entry.insert(0, product[1])  # Presumindo que o nome é o segundo elemento
+
+                tk.Label(window_update, text="Price:").grid(row=2, column=0, padx=5, pady=5)
+                price_entry = tk.Entry(window_update, width=30)
+                price_entry.grid(row=2, column=1, padx=5, pady=5)
+                price_entry.insert(0, product[2])  # Presumindo que o preço é o terceiro elemento
+                    
+                tk.Label(window_update, text="Quantity:").grid(row=3, column=0, padx=5, pady=5)
+                quantity_entry = tk.Entry(window_update, width=30)
+                quantity_entry.grid(row=3, column=1, padx=5, pady=5)
+                quantity_entry.insert(0, product[3])  # Presumindo que a quantidade é o quarto elemento
+                
+                # Atualiza o produto com os novos valores
+                def update_product():
+                    name = name_entry.get()
+                    price = price_entry.get()
+                    quantity = quantity_entry.get()
+
+                    self.product_database.update(name, price, quantity, id)
+                    messagebox.showinfo("Success", "Item updated successfully!")
+                    window_update.destroy()  # Fechar a janela após o sucesso
+                
+                # Botão de Confirmação
+                confirm_button = tk.Button(window_update, text="Confirm", command=update_product)
+                confirm_button.grid(row=4, columnspan=2, pady=5, sticky="e")
+
+            except ProductFoundError as e:
+                messagebox.showerror("Error", str(e))
+        
+        # Botão para buscar o produto ao abrir a janela
+        confirm_button = tk.Button(window_update, text="Search", command=confirm_update)
+        confirm_button.grid(row=4, columnspan=2, pady=5, sticky="e")
+
     
     def list_items(self):
         # Lógica para listar itens
         window_list = tk.Toplevel(self)
         window_list.title("List All Items")
+        
+        listbox = tk.Listbox(window_list, width=50, height=15)
+        listbox.pack(pady=10, padx=10)
 
+        # Implementar a lógica de listagem dos itens
+        try:
+            items = self.product_database.list_all()
+            if items: 
+                for item in items:
+                    listbox.insert(tk.END, item)
+            else:
+                messagebox.showinfo("Info", "No items found!")
+        except ProductFoundError as e:
+            messagebox.showerror("Error", f"Error listing items {str(e)}")
+
+        #Botão para Fechar Janela
+        button_exit = tk.Button(window_list, text="Exit", command=window_list.destroy)
+        button_exit.pack(pady=10)
+        
     def remove_item(self):
         # Lógica para remover item
         window_remove = tk.Toplevel(self)
         window_remove.title("Remove Item")
+
+        # Labels e Entradas
+        tk.Label(window_remove, text="Id:").grid(row=1, column=0, padx=5, pady=5)
+        id_entry = tk.Entry(window_remove, width=30)
+        id_entry.grid(row=0, column=1, padx=5, pady=5)
+
+        # Implementar a lógica de remoção do item
+        def confirm_remove():
+            id = id_entry.get()
+            try:
+                self.product_database.remove(id)
+                messagebox.showinfo("Success", "Item removed successfully!")
+            except ProductFoundError as e:
+                messagebox.showerror("Error", str(e))
+
+        # Botão de Confirmação
+        confirm_button = tk.Button(window_remove, text="Confirm", command=confirm_remove)
+        confirm_button.grid(row=3, columnspan=2, pady=5, sticky="e")
 
     def close_window(self):
         self.destroy()  # Fechar a janela principal e encerrar o programa

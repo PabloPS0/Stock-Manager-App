@@ -35,9 +35,11 @@ class ProductRepository:
         self.conn.commit()
         if search_product.rowcount == 0:
             raise ProductFoundError(f"Product with id {id} not found.")
-        return True
+        return 
+    
     def list_all(self):
-        results = self.cursor.fetchall()
+        self.cursor.execute("SELECT * FROM inventory")  # Executa uma consulta de seleção
+        results = self.cursor.fetchall()  # Busca todos os resultados
         return results
 
     def remove(self, id):
