@@ -176,12 +176,14 @@ class StockManagerApp(tk.Tk):
                     listbox.insert(tk.END, item)
             else:
                 messagebox.showinfo("Info", "No items found!")
+                window_list.destroy()
         except ProductFoundError as e:
             messagebox.showerror("Error", f"Error listing items {str(e)}")
 
-        #Botão para Fechar Janela
-        button_exit = tk.Button(window_list, text="Exit", command=window_list.destroy)
-        button_exit.pack(pady=10)
+        # Botão para Fechar 
+        if window_list.winfo_exists(): # Verifica se a janela ainda existe
+            button_exit = tk.Button(window_list, text="Exit", command=window_list.destroy)
+            button_exit.pack(pady=10)
         
     def remove_item(self):
         # Lógica para remover item
