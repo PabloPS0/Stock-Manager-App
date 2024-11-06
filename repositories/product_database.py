@@ -6,7 +6,7 @@ load_dotenv()
 
 DATABASE_PATH = os.getenv('DATABASE_PATH')
 
-DB_FOLDER = 'repositories'
+DB_FOLDER = 'database'
 DB_PATH = os.path.join(DB_FOLDER, 'inventory.db')
 
 conn = sqlite3.connect(database=DB_PATH)
