@@ -10,8 +10,8 @@
 
 ## Tecnologias Utilizadas
 - Python
-- Tkinter
-- SQLite
+- CustomTkinter
+- SQLite3
 
 ## Como Usar
 1. Clone o repositório:
