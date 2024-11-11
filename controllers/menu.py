@@ -1,12 +1,20 @@
-from cProfile import label
 import customtkinter as ctk
 from tkinter import messagebox
 from repositories.product_database import ProductRepository
 from service.product_service import ProductValidator, ProductFoundError
 
+class TopLevelWindow(ctk.CTkToplevel):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.configure(bg='black')
+        self.minsize(300, 100) # width, height
+        self.maxsize(800, 600)
+        self.geometry("600x400+50+50") # width x height + x + y
+        self.focus()
+
 class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.product_service = ProductValidator()
         self.product_database = ProductRepository()
         self.title("StockManager")
@@ -61,9 +69,9 @@ class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
     def add_item(self):
         # Lógica para adicionar item
         # Criar uma sub-janela
-        window_add = ctk.CTkToplevel(self)
+        window_add = TopLevelWindow()
         window_add.title("Add Item")
-        
+
         # Labels e Entradas
         ctk.CTkLabel(window_add, text="Name:").grid(row=0, column=0, padx=5, pady=5)
         name_entry = ctk.CTkEntry(window_add, width=30)
@@ -107,7 +115,7 @@ class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
     
     def search_item(self):
         # Lógica para pesquisar item
-        window_search = ctk.CTkToplevel(self)
+        window_search = TopLevelWindow()
         window_search.title("Search Item")
 
         # Labels e Entradas
@@ -118,6 +126,7 @@ class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
         # Captura dados de entrada
         def confirm_search():
             id = id_entry.get()
+            
 
             if not ProductValidator.validate_non_empty_value(id):
                 messagebox.showerror("Error", "Id cannot be empty.")
@@ -143,7 +152,7 @@ class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
 
     def update_item(self):
         # Lógica para atualizar item
-        window_update = ctk.CTkToplevel(self)
+        window_update = TopLevelWindow()
         window_update.title("Update Item")
 
         # Labels e Entradas
@@ -200,7 +209,7 @@ class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
     
     def list_items(self):
         # Lógica para listar itens
-        window_list = ctk.CTkToplevel(self)
+        window_list = TopLevelWindow()
         window_list.title("List All Items")
         
         listbox = ctk.CTkListbox(window_list, width=50, height=15)
@@ -225,7 +234,7 @@ class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
         
     def remove_item(self):
         # Lógica para remover item
-        window_remove = ctk.CTkToplevel(self)
+        window_remove = TopLevelWindow()
         window_remove.title("Remove Item")
 
         # Labels e Entradas
