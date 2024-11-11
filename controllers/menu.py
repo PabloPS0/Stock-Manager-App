@@ -1,12 +1,13 @@
 from cProfile import label
 import customtkinter as ctk
 from tkinter import messagebox
-from repositories.product_database import ProductFoundError, ProductRepository
-from service.product_service import ProductValidator
+from repositories.product_database import ProductRepository
+from service.product_service import ProductValidator, ProductFoundError
 
 class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
     def __init__(self):
         super().__init__()
+        self.product_service = ProductValidator()
         self.product_database = ProductRepository()
         self.title("StockManager")
         self.protocol("WM_DELETE_WINDOW", self.close_window) # Configure the closing protocol
@@ -25,7 +26,7 @@ class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
     def create_containers(self):
         # Top Frame (por exemplo, pode conter entradas e botões principais)
         self.top_frame = ctk.CTkFrame(self)
-        self.top_frame.pack(fill=ctk.X)
+        self.top_frame.pack(fill=ctk.X, pady=5, padx=5)
         
         # Mid Frame (pode conter listboxes, labels, etc.)
         self.mid_frame = ctk.CTkFrame(self)
@@ -33,7 +34,7 @@ class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
         
         # Bottom Frame (pode conter botões de ações)
         self.bottom_frame = ctk.CTkFrame(self)
-        self.bottom_frame.pack(fill=ctk.X)
+        self.bottom_frame.pack(fill=ctk.X, pady=5, padx=5)
 
     def create_widgets(self):
         name_app = ctk.CTkLabel(self.top_frame, text="StockManager", font=("Arial", 24))
@@ -80,8 +81,20 @@ class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
             name = name_entry.get()
             price = price_entry.get()
             quantity = quantity_entry.get()
+
+            if not ProductValidator.validate_non_empty_value(name):
+                messagebox.showerror("Error", "Name cannot be empty.")
+                return
+            if not ProductValidator.validate_positive_price(price):
+                messagebox.showerror("Error", "Price must be a positive number.")
+                return
+            if not ProductValidator.validate_positive_quantity(quantity):
+                messagebox.showerror("Error", "Quantity must be a positive number.")
+                return
+
+            # Caso não haja erros os dados serão enviados para a camada de repositórios
             try:
-                self.product_database.add(name, price, quantity)
+                self.product_service.add(name, price, quantity)
                 messagebox.showinfo("Success", "Item added successfully!")
             except ProductFoundError as e:
                 messagebox.showerror("Error", str(e))
@@ -104,6 +117,18 @@ class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
         # Captura dados de entrada
         def confirm_search():
             id = id_entry.get()
+
+            if not ProductValidator.validate_non_empty_value(id):
+                messagebox.showerror("Error", "Id cannot be empty.")
+                return
+            if not ProductValidator.validate_numeric_id(id):
+                messagebox.showerror("Error", "Id must be a numeric value.")
+                return
+            if not ProductValidator.validate_unique_id(id):
+                messagebox.showerror("Error", "Id must be unique.")
+                return
+            
+            # Caso não haja erros os dados serão enviados para a camada de repositórios
             try:
                 product = self.product_database.search(id)
                 messagebox.showinfo("Success", f"Product found: {product}")
