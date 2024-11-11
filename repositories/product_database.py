@@ -1,6 +1,7 @@
 import os
 import sqlite3
 from dotenv import load_dotenv
+from service.product_service import ProductValidator
 
 load_dotenv()
 
