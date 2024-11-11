@@ -49,6 +49,11 @@ class ProductRepository:
         else:
             raise ProductFoundError(f"Product with id {id} not found.")
         
+    def search_existings_ids(self):
+        self.cursor.execute("SELECT id FROM inventory")
+        existing_ids = [product[0] for product in self.cursor.fetchall()]
+        return existing_ids
+        
     def exit(self):
         if self.conn:
             self.conn.close()

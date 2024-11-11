@@ -16,7 +16,7 @@ class ProductValidator:
     @staticmethod
     def validate_numeric_id(id):
         # Verifica se o ID contém apenas números e é positivo
-        return id.isdigt() and int(id) > 0
+        return id.isdigit() and int(id) > 0
     
     @staticmethod
     def validate_positive_price(price):
