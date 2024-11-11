@@ -63,6 +63,7 @@ class StockManagerApp(ctk.CTk):   # Change: Using CTk as base
         # Criar uma sub-janela
         window_add = ctk.CTkToplevel(self)
         window_add.title("Add Item")
+        
         # Labels e Entradas
         ctk.CTkLabel(window_add, text="Name:").grid(row=0, column=0, padx=5, pady=5)
         name_entry = ctk.CTkEntry(window_add, width=30)
