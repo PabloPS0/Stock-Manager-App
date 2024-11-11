@@ -1,7 +1,7 @@
 import os
 import sqlite3
 from dotenv import load_dotenv
-from service.product_service import ProductValidator
+from service.product_service import ProductValidator, ProductFoundError
 
 load_dotenv()
 
@@ -13,13 +13,11 @@ DB_PATH = os.path.join(DB_FOLDER, 'inventory.db')
 conn = sqlite3.connect(database=DB_PATH)
 cursor = conn.cursor()
 
-class ProductFoundError(Exception):
-    pass
-
 class ProductRepository:
     def __init__(self):
         self.conn = sqlite3.connect(DATABASE_PATH)
         self.cursor = self.conn.cursor()
+        self.product_validator = ProductValidator()
     
     def add(self, name, price, quantity):
         self.cursor.execute("INSERT INTO inventory (name, price, quantity) VALUES (?, ?, ?)", (name, price, quantity))

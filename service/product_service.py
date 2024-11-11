@@ -1,34 +1,37 @@
-import os, sys
-import customtkinter as ctk
-from controllers import menu
-from repositories.product_database import ProductRepository
+class ProductFoundError(Exception):
+    """Exceção levantada quando um produto com ID já existente é encontrado."""
+    pass
 
 class ProductValidator:
-    def __init__(self, fields):
-        def validate_non_empty_value(self):
-            
-            # Valida se todos os valores estão preenchidos
-            for fields in self.fields:
-                if not fields.get():
-                    return False
-            return True
-        
-        def validate_positive_price(self, price):
-            # Valida se o preço é um número decimal positivo
-            try:
-                price = float(price)
-                if price <= 0:
-                    return False
-            except ValueError:
-                return False
-            return True
-        
-        def validate_positive_quantity(self, quantity):
-            try:
-                quantity = int(quantity)
-                if quantity <= 0:
-                    return False
-            except ValueError:
-                return False
-            return True
+    @staticmethod
+    def validate_non_empty_value(fields):
+        # Verifica se os campos não estão vazios
+        return bool(fields)
+    
+    @staticmethod
+    def validate_unique_id(id, existing_ids):
+        # Verifica se o ID é único
+        return id not in existing_ids
+    
+    @staticmethod
+    def validate_numeric_id(id):
+        # Verifica se o ID contém apenas números e é positivo
+        return id.isdigt() and int(id) > 0
+    
+    @staticmethod
+    def validate_positive_price(price):
+        # Verifica se o preço é um número positivo
+        try:
+            price = float(price)
+            return price > 0
+        except (ValueError, TypeError):
+            return False
+    
+    @staticmethod
+    def validate_positive_quantity(quantity):
+        try:
+            quantity = int(quantity)
+            return quantity > 0
+        except (ValueError, TypeError):
+            return False
         
