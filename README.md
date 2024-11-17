@@ -1,6 +1,6 @@
-# StockManager
+# Stock-Manager-App
 
-**StockManager** é um software de gerenciamento de estoque intuitivo e fácil de usar, desenvolvido em Python, que permite a empresas e empreendedores manterem um controle eficaz sobre seus produtos. Com uma interface gráfica amigável, o StockManager simplifica o monitoramento de itens, facilitando tarefas como adição, edição e remoção de produtos, além de fornecer relatórios detalhados sobre o status do estoque.
+**Stock-Manager-App** é um software de gerenciamento de estoque intuitivo e fácil de usar, desenvolvido em Python, que permite a empresas e empreendedores manterem um controle eficaz sobre seus produtos. Com uma interface gráfica amigável, o StockManager simplifica o monitoramento de itens, facilitando tarefas como adição, edição e remoção de produtos, além de fornecer relatórios detalhados sobre o status do estoque.
 
 ## Funcionalidades
 - **Interface Gráfica Amigável**
@@ -16,15 +16,15 @@
 ## Como Usar
 1. Clone o repositório:
 ```
-git clone https://github.com/PabloPS0/StockManager.git
+git clone https://github.com/PabloPS0/Stock-Manager-App.git
 ```
 2. Navegue até o diretório do projeto:
 ```
-cd StockManager
+cd Stock-Manager-App
 ```
 3. Execute o aplicativo:
 ```
-python main.py
+python src/main.py
 ```
 
 ## Contribuições
